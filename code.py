@@ -146,6 +146,7 @@ class Field:
 class Game:
 
     def __init__(self) -> None:
+        self.computer_c = 10
         self.player_field = Field()
         self.computer_field = Field()
         self.last_hit: Optional[Tuple[int, int]] = None
@@ -157,6 +158,7 @@ class Game:
         self.setup_player_tanks()
         self.setup_computer_tanks()
         self.play()
+        self.computer_c = 10
 
     def setup_player_tanks(self) -> None:
         """Расстановка танков для игрока"""
@@ -314,6 +316,7 @@ class Game:
         """Обрабатывает ход игрока"""
         while True:
             try:
+                print(f"Противника кол-во кораблей: {self.computer_c}")
                 coord = input("Ваш выстрел: ").upper().strip()
                 if coord == "ВЫХОД":
                     if input("Точно выйти? (да/нет): ").lower() == "да":
@@ -352,6 +355,7 @@ class Game:
                                        for s in self.computer_field.shots)
                                    for r in tank.rows):
                                 print("Танк противника уничтожен!")
+                                self.computer_c -= 1
                 else:
                     self.print_combined_fields()
                     print("Мимо!")
